@@ -250,16 +250,32 @@ var Devless =
 
 	},
 
-	requestProcessor: function(data, sub_url, method, callback ){
+	runScript: function(serviceName, method, data, callback){
+
+			sub_url = "/api/v1/service/"+serviceName+"/script";
+			
+			Devless.requestProcessor(data, sub_url,  method.toUpperCase(), function(response){
+
+			callback(response);
+
+			}, false);
+
+	},
+
+	requestProcessor: function(data, sub_url, method, callback, parse=true ){
 		
 
 		var xhr = new XMLHttpRequest();
 
 
 		xhr.addEventListener("readystatechange", function () {
-		  if (this.readyState === 4) {
+		  if (this.readyState === 4 && parse == true) {
 		  	response = JSON.parse(this.responseText);
 		    callback(response);
+		  }
+		  else{
+
+		  	callback(this.responseText);
 		  }
 		});
 
@@ -280,60 +296,8 @@ var Devless =
 		xhr.send(data);
 	},
 
-	payload:  {signup: {"resource": [
-			    {
-			      "auth_type": "signup",
-			      "first_name": "enter first_name" ,
-			      "last_name": "enter last_name",
-			      "email": "enter email" ,
-			      "phone_number": "enter phone_number" ,
-			      "username": "enter username" ,
-			      "password": "enter user password" ,
-			    }
-			  ]
-			},
-			//You have the alternative to use either the phone_number ,email or password
-			login: {
-				"email": "enter email" ,
-				"phone_number": "enter phone_number" ,
-			    "username": "enter username" ,
-			    "password": "enter user password" ,
-			}
-		}
+	
 }
 
-
-
-
-
-// function delete_profile(){
-
-// }
-
-
-// function add_data(){
-
-// }
-
-// function query_table(){
-
-// }
-
-
-// function update_data(){
-
-// }
-
-// function delete_data(){
-
-// }
-
-// function run_script(){
-
-// }
-
-// function create_schema(){
-
-// }
 
 
