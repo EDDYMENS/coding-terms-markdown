@@ -9,7 +9,7 @@
 //constants
 window.devless_token = "e5be7b06e6427becfea9f806d0d49b20";
 window.devless_key = "localhost";
-window.devless_user_token = ""; 
+
 
 
 //http, data, chrome, chrome-extension, https, chrome-extension-resource.
@@ -147,6 +147,108 @@ var Devless =
 			})		
 	},
 
+	//add options to params object
+	queryData: function(serviceName, table, callback, params={} ){
+
+			var	parameters = "";
+			//order parameters
+			for (let key in params) {
+				  if (!params.hasOwnProperty(key)) { console.log(key) }
+				    parameters = "&"+key+"="+params[key]+parameters;
+			}
+			sub_url = "/api/v1/service/"+serviceName+"/db?table="+table;
+			Devless.requestProcessor("", sub_url,  "GET", function(response){
+
+				callback(response);
+			})		
+
+	},
+
+	addData: function(serviceName, table, callback, data={}){
+
+			
+			var payload = JSON.stringify({
+			  "resource": [
+			    {  
+			         "name": table,
+			         "field":[  
+
+			            data
+			         ]
+		      }
+
+			  ]
+			});
+
+			sub_url = "/api/v1/service/"+serviceName+"/db";
+			Devless.requestProcessor(payload, sub_url,  "POST", function(response){
+
+				
+				callback(response);
+			});
+
+	},
+
+	updateData: function(serviceName, table, where_key, where_value, callback,  data={}){
+
+		var payload = JSON.stringify({  
+	   	"resource":[  
+	      {  
+	         "name":table,
+	         "params":[  
+	            {  
+	               "where": where_key+","+where_value,
+	               "data":[
+	                   data
+	               ]
+
+	            }
+	         ]
+	      }
+
+	    ]
+		});
+
+			sub_url = "/api/v1/service/"+serviceName+"/db";
+			Devless.requestProcessor(payload, sub_url,  "PATCH", function(response){
+
+				
+				callback(response);
+			});
+
+	},
+
+	//operation types : delete drop truncate
+	delete: function(serviceName, table, where_key, where_value, action, callback){
+
+			var payloadObj = 
+				{  
+				   	"resource":[  
+				      {  
+				         "name":table,
+				         "params":[  
+				            {  
+			                   "where": where_key+",=,"+where_value
+					         }
+				         ]
+				      }
+
+				    ]
+				};
+			
+			payloadObj.resource[0].params[0][action] = "true";
+			console.log(payloadObj);
+			payloadStr = JSON.stringify(payloadObj);
+			console.log(payloadStr);
+			sub_url = "/api/v1/service/"+serviceName+"/db";
+			
+			Devless.requestProcessor(payloadStr, sub_url,  "DELETE", function(response){
+
+			callback(response);
+
+			});
+
+	},
 
 	requestProcessor: function(data, sub_url, method, callback ){
 		
