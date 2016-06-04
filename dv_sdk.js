@@ -2,7 +2,7 @@
 /**
 @author Devless
 @version 0.1
-@description Javascript sdk for Devless
+@description Devless sdk for Javascript
 */
 /* Initizialize library */
 
