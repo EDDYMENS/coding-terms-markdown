@@ -1,14 +1,15 @@
 
 /**
 @author Devless
-@version 0.1
-@description Devless sdk for Javascript
+@version 0.01
+@description Devless sdk for Javascript	
 */
 /* Initizialize library */
 
 //constants
-window.devless_token = "e5be7b06e6427becfea9f806d0d49b20";
-window.devless_key = "localhost";
+window.devless_token = "";
+window.devless_key = "";
+window.devless_domain_name = "";
 
 
 
@@ -16,12 +17,12 @@ window.devless_key = "localhost";
 window.devless_request_protocol = "http";
 
 //change port number if required
-window.devless_port = 8000;
+window.devless_port = 80;
 
 
 
 window.devless_instance_url = 
-window.devless_request_protocol+"://"+window.devless_key+":"+window.devless_port;
+							window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
 var Devless =
 {
 	signUp: function (data, callback){
@@ -47,7 +48,7 @@ var Devless =
 				if(response.status_code == 1000 ){
 
 					
-					sessionStorage.setItem('devless_user_token', response.payload[0]);
+					sessionStorage.setItem('devless_user_token'+window.devless_domain_name+window.devless_token, response.payload[0]);
  
 				}
 				
@@ -80,7 +81,7 @@ var Devless =
 				if(response.status_code == 1000 ){
 
 					
-					sessionStorage.setItem('devless_user_token', response.payload[0]);
+					sessionStorage.setItem('devless_user_token'+window.devless_domain_name+window.devless_token, response.payload[0]);
 				}
 				
 				callback(response);
@@ -118,7 +119,7 @@ var Devless =
 			sub_url = "/api/v1/service/auth/script";
 			Devless.requestProcessor(data, sub_url,  "POST", function(response){
 
-				console.log(response);
+				
 				
 				callback(response);
 			});
@@ -139,7 +140,7 @@ var Devless =
 				if(response.status_code == 1000 ){
 
 					
-					sessionStorage.setItem('devless_user_token', response.payload[0]);
+					sessionStorage.setItem('devless_user_token'+window.devless_domain_name+window.devless_token, response.payload[0]);
  
 				}
 				
@@ -151,9 +152,9 @@ var Devless =
 	queryData: function(serviceName, table, callback, params={} ){
 
 			var	parameters = "";
-			//order parameters
+			//organise parameters
 			for (let key in params) {
-				  if (!params.hasOwnProperty(key)) { console.log(key) }
+				  if (!params.hasOwnProperty(key)) { /**/ }
 				    parameters = "&"+key+"="+params[key]+parameters;
 			}
 			sub_url = "/api/v1/service/"+serviceName+"/db?table="+table;
@@ -237,9 +238,9 @@ var Devless =
 				};
 			
 			payloadObj.resource[0].params[0][action] = "true";
-			console.log(payloadObj);
+			
 			payloadStr = JSON.stringify(payloadObj);
-			console.log(payloadStr);
+			
 			sub_url = "/api/v1/service/"+serviceName+"/db";
 			
 			Devless.requestProcessor(payloadStr, sub_url,  "DELETE", function(response){
@@ -262,7 +263,7 @@ var Devless =
 
 	},
 
-	requestProcessor: function(data, sub_url, method, callback, parse=true ){
+	requestProcessor: function(data, sub_url, method, callback, parse = true ){
 		
 
 		var xhr = new XMLHttpRequest();
@@ -270,10 +271,12 @@ var Devless =
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4 && parse == true) {
+
 		  	response = JSON.parse(this.responseText);
+
 		    callback(response);
 		  }
-		  else{
+		  else if (this.readyState === 4 && parse == false ){
 
 		  	callback(this.responseText);
 		  }
@@ -287,7 +290,7 @@ var Devless =
 
 		if(sessionStorage.getItem('devless_user_token') != ""){
 
-			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token') );
+			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_domain_name+window.devless_token) );
 		}
 		
 		
