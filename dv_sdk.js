@@ -7,9 +7,9 @@
 /* Initizialize library */
 
 //constants
-window.devless_token = "";
-window.devless_key = "";
-window.devless_domain_name = "";
+window.devless_token = "8c90dab7c1f25beaca605a1d88874922";
+window.devless_key = "0.0.0.0";
+window.devless_domain_name = "devless.io";
 
 
 
@@ -17,7 +17,7 @@ window.devless_domain_name = "";
 window.devless_request_protocol = "http";
 
 //change port number if required
-window.devless_port = 80;
+window.devless_port = 8000;
 
 
 
@@ -103,6 +103,8 @@ var Devless =
 			Devless.requestProcessor(data, sub_url,  "POST", function(response){
 
 				callback(response);
+				sessionStorage.removeItem('devless_user_token'+window.devless_domain_name+window.devless_token);
+				
 			});
 	},
 
@@ -261,6 +263,11 @@ var Devless =
 
 			}, false);
 
+	},
+
+	token: function(callback) {
+
+			callback(sessionStorage.getItem('devless_user_token'));
 	},
 
 	requestProcessor: function(data, sub_url, method, callback, parse = true ){
