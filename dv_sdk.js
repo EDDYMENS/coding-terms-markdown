@@ -7,9 +7,9 @@
 /* Initizialize library */
 
 //constants
-window.devless_token = "8c90dab7c1f25beaca605a1d88874922";
-window.devless_key = "0.0.0.0";
-window.devless_domain_name = "devless.io";
+window.devless_token = "e5be7b06e6427becfea9f806d0d49b20";
+window.devless_key = "localhost";
+window.devless_domain_name = "localhost";
 
 
 
@@ -31,10 +31,10 @@ var Devless =
 			  "resource": [
 			    {
 			      "auth_type": "signup" ,
-			      "first_name": data.first_name ,
-			      "last_name": data.last_name ,
+			      "first_name": data.firstname ,
+			      "last_name": data.lastname ,
 			      "email": data.email ,
-			      "phone_number": data.phone_number ,
+			      "phone_number": data.phonenumber ,
 			      "username": data.username ,
 			      "password": data.password ,
 			    }
@@ -159,7 +159,7 @@ var Devless =
 				  if (!params.hasOwnProperty(key)) { /**/ }
 				    parameters = "&"+key+"="+params[key]+parameters;
 			}
-			sub_url = "/api/v1/service/"+serviceName+"/db?table="+table;
+			sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
 			Devless.requestProcessor("", sub_url,  "GET", function(response){
 
 				callback(response);
@@ -221,7 +221,7 @@ var Devless =
 
 	},
 
-	//operation types : delete drop truncate
+	//operation types : delete, drop, truncate
 	delete: function(serviceName, table, where_key, where_value, action, callback){
 
 			var payloadObj = 
