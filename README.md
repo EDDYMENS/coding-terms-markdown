@@ -94,6 +94,7 @@ params={
 			size:2,
 			order:"content",
 			where:"id,2",
+			offset:2
 		}     
 Devless.queryData: function(serviceName, table, callback, params ){
 
