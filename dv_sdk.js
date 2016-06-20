@@ -256,7 +256,7 @@ var Devless =
 	runScript: function(serviceName, method, data, callback){
 
 			sub_url = "/api/v1/service/"+serviceName+"/script";
-			data = JSON.stringify(data);
+			data = JSON.stringify({ "resource": [data]});
 			Devless.requestProcessor(data, sub_url,  method.toUpperCase(), function(response){
 
 			callback(response);
