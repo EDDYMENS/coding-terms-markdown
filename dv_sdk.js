@@ -7,7 +7,7 @@
 /* Initizialize library */
 
 //constants
-window.devless_token = "e5be7b06e6427becfea9f806d0d49b20";
+window.devless_token = "955c8a0dc37b4a22b5950a9e0e9491d0";
 window.devless_key = "localhost";
 window.devless_domain_name = "localhost";
 
@@ -31,10 +31,10 @@ var Devless =
 			  "resource": [
 			    {
 			      "auth_type": "signup" ,
-			      "first_name": data.firstname ,
-			      "last_name": data.lastname ,
+			      "first_name": data.first_name ,
+			      "last_name": data.last_name ,
 			      "email": data.email ,
-			      "phone_number": data.phonenumber ,
+			      "phone_number": data.phone_number ,
 			      "username": data.username ,
 			      "password": data.password ,
 			    }
@@ -221,7 +221,7 @@ var Devless =
 
 	},
 
-	//operation types : delete, drop, truncate
+	//operation types : delete drop truncate
 	delete: function(serviceName, table, where_key, where_value, action, callback){
 
 			var payloadObj = 
