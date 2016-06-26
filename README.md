@@ -142,7 +142,7 @@ where action may be ``delete`` to remove the record or ``truncate`` to clear the
 eg:
 
 ```
-Devless.updateData("blog", "blogTable", "title", "the bear", "delete", function(d){console.log(d)})
+Devless.delete("blog", "blogTable", "title", "the bear", "delete", function(d){console.log(d)})
 ```
 
 **runScript:**
