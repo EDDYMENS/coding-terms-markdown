@@ -7,7 +7,7 @@
 /* Initizialize library */
 
 //constants
-window.devless_token = "955c8a0dc37b4a22b5950a9e0e9491d0";
+window.devless_token = "";
 window.devless_key = "localhost";
 window.devless_domain_name = "localhost";
 
@@ -17,7 +17,7 @@ window.devless_domain_name = "localhost";
 window.devless_request_protocol = "http";
 
 //change port number if required
-window.devless_port = 8000;
+window.devless_port = 9090;
 
 
 
