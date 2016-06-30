@@ -34,7 +34,7 @@ Devless.serviceUrl = function subUrl(serviceName) {
 	return "api/v1/service/" + serviceName + "/db";
 }
 
-Devless.prototype.requestProcessor = function requestProcessor(payload, serviceUrl, method, callback, parse = true) {
+Devless.prototype.requestProcessor = function requestProcessor(payload, serviceUrl, method, callback, parse) {
 	var xhr = new XMLHttpRequest();
 
 	xhr.addEventListener("readystatechange", function () {
