@@ -59,7 +59,7 @@ Devless.prototype.requestProcessor = function requestProcessor(payload, serviceU
 		);
 	}
 	
-	xhr.send(data);
+	xhr.send(payload);
 }
 
 Devless.prototype.signUp = function signUp(data, callback) {};
