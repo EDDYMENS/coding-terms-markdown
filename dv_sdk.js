@@ -7,8 +7,10 @@
 /* Initizialize library */
 
 window.Devless = function Devless(options) {
-	this.token = options.token || throw new Error('`token` is required');
-	this.key = options.key 	   || throw new Error('`key` is required');
+	if (!options.token) throw new Error('`token` is a required parameter');
+	if (!options.key) throw new Error('`key` is a required parameter');
+	this.token = options.token;
+	this.key = options.key;
 
 	var urlString = (options.protocol || 'http') + '://' + options.domainName;
 	if (options.port && options.port !== 80) {
