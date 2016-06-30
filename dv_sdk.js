@@ -34,7 +34,7 @@ Devless.serviceUrl = function subUrl(serviceName) {
 	return "api/v1/service/" + serviceName + "/db";
 }
 
-Devless.prototype.requestProcessor = function requestProcessor(payload, serviceUrl, method, callback, parse) {
+Devless.prototype.requestProcessor = function requestProcessor(payload, serviceUrl, method, parse, callback) {
 	var xhr = new XMLHttpRequest();
 	
 	xhr.addEventListener("readystatechange", function () {
@@ -64,11 +64,11 @@ Devless.prototype.requestProcessor = function requestProcessor(payload, serviceU
 
 Devless.prototype.signUp = function signUp(data, callback) {};
 
-Devless.prototype.addData = function addData(serviceName, table, data, callback,"true") {
+Devless.prototype.addData = function addData(serviceName, table, data, callback) {
 	var payload = Devless.serializeForAddData(table, data),
 		serviceUrl = Devless.serviceUrl(serviceName);
 	
-	this.requestProcessor(payload, serviceUrl, "POST", function(response) {
+	this.requestProcessor(payload, serviceUrl, "POST", true, function(response) {
 		callback(response);
 	});
 };
