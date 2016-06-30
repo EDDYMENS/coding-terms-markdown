@@ -6,7 +6,7 @@
 */
 /* Initizialize library */
 
-var Devless = function Devless(options) {
+window.Devless = function Devless(options) {
 	this.token = options.token || throw new Error('`token` is required');
 	this.key = options.key 	   || throw new Error('`key` is required');
 
