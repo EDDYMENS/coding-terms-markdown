@@ -64,7 +64,7 @@ Devless.prototype.requestProcessor = function requestProcessor(payload, serviceU
 
 Devless.prototype.signUp = function signUp(data, callback) {};
 
-Devless.prototype.addData = function addData(serviceName, table, data, callback,true) {
+Devless.prototype.addData = function addData(serviceName, table, data, callback,"true") {
 	var payload = Devless.serializeForAddData(table, data),
 		serviceUrl = Devless.serviceUrl(serviceName);
 	
