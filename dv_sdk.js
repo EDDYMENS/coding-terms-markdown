@@ -36,7 +36,7 @@ Devless.serviceUrl = function subUrl(serviceName) {
 
 Devless.prototype.requestProcessor = function requestProcessor(payload, serviceUrl, method, callback, parse) {
 	var xhr = new XMLHttpRequest();
-
+	
 	xhr.addEventListener("readystatechange", function () {
 	  if (this.readyState === 4 && parse) {
 	  	response = JSON.parse(this.responseText);
@@ -64,7 +64,7 @@ Devless.prototype.requestProcessor = function requestProcessor(payload, serviceU
 
 Devless.prototype.signUp = function signUp(data, callback) {};
 
-Devless.prototype.addData = function addData(serviceName, table, data, callback) {
+Devless.prototype.addData = function addData(serviceName, table, data, callback,true) {
 	var payload = Devless.serializeForAddData(table, data),
 		serviceUrl = Devless.serviceUrl(serviceName);
 	
