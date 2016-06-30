@@ -68,7 +68,7 @@ Devless.prototype.addData = function addData(serviceName, table, data, callback)
 	var payload = Devless.serializeForAddData(table, data),
 		serviceUrl = Devless.serviceUrl(serviceName);
 	
-	Devless.requestProcessor(payload, serviceUrl, "POST", function(response) {
+	this.requestProcessor(payload, serviceUrl, "POST", function(response) {
 		callback(response);
 	});
 };
