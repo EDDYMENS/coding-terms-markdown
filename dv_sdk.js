@@ -6,6 +6,23 @@
 */
 /* Initizialize library */
 
+//constants
+window.devless_token = "";
+window.devless_key = "localhost";
+window.devless_domain_name = "localhost";
+
+
+
+//http, data, chrome, chrome-extension, https, chrome-extension-resource.
+window.devless_request_protocol = "http";
+
+//change port number if required
+window.devless_port = 9000;
+
+
+
+window.devless_instance_url = 
+							window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
 
 var Devless =
 {
@@ -144,7 +161,6 @@ var Devless =
 			}
 			sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
 			Devless.requestProcessor("", sub_url,  "GET", function(response){
-
 				callback(response);
 			})		
 
@@ -152,7 +168,6 @@ var Devless =
 
 	addData: function(serviceName, table, callback, data){
 
-			
 			var payload = JSON.stringify({
 			  "resource": [
 			    {  
@@ -169,8 +184,8 @@ var Devless =
 			sub_url = "/api/v1/service/"+serviceName+"/db";
 			Devless.requestProcessor(payload, sub_url,  "POST", function(response){
 
-				
 				callback(response);
+		
 			});
 
 	},
@@ -244,7 +259,7 @@ var Devless =
 
 			callback(response);
 
-			}, false);
+			}, \);
 
 	},
 
@@ -254,20 +269,19 @@ var Devless =
 	},
 
 	requestProcessor: function(data, sub_url, method, callback, parse){
-		
-		parse = parse || true ; 
 
+		parse = parse || false ; 
+		
 		var xhr = new XMLHttpRequest();
 
-
 		xhr.addEventListener("readystatechange", function () {
-		  if (this.readyState === 4 && parse == true) {
+		  if (this.readyState === 4 && parse == false) {
 
 		  	response = JSON.parse(this.responseText);
 
 		    callback(response);
 		  }
-		  else if (this.readyState === 4 && parse == false ){
+		  else if (this.readyState === 4 && parse == true ){
 
 		  	callback(this.responseText);
 		  }
