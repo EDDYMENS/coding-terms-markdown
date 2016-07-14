@@ -42,7 +42,7 @@ var Devless =
 
 					console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
 				} else if (response.status_code == 1000) {
-					console.debug("Your app connected to Devless successfully and you have auth service installed");
+					console.debug("Your app connected to Devless successfully and you have auth services installed");
 
 				} else {
 					console.debug("your app connected to Devless successfully. you can get service from store.devless.io ")
