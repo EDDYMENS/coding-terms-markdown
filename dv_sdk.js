@@ -8,6 +8,8 @@
 
 //constants
 
+
+
 window.devless_instance_url = 
 							window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
 
@@ -25,12 +27,10 @@ var Devless =
 			sub_url = "/api/v1/service/auth/script";
 			Devless.requestProcessor(data, sub_url,  "POST", function(response){
 				response = JSON.parse(response);
+				console.log(response);
 				if (response.status_code == 631){
 
 					console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
-				} else if (response.status_code == undefined){
-
-					console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
 				} else if (response.status_code == 1000) {
 					console.debug("Your app connected to Devless successfully and you have auth service installed");
 
@@ -289,15 +289,30 @@ var Devless =
 		var xhr = new XMLHttpRequest();
 
 		xhr.addEventListener("readystatechange", function () {
+
+
+					
+				
 		  if (this.readyState === 4 && parse == false) {
+		  	if(this.status == 200) {
+		  		response = JSON.parse(this.responseText);
+		  		callback(response);
+		  	} else {
 
-		  	response = JSON.parse(this.responseText);
-
-		    callback(response);
+	  			console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+			}
+		  	
+		    
 		  }
 		  else if (this.readyState === 4 && parse == true ){
 
-		  	callback(this.responseText);
+		  	if(this.status == 200) {
+		  		response = JSON.parse(this.responseText);
+		  		callback(response);
+		  	} else {
+
+	  			console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+			}
 		  }
 		});
 
