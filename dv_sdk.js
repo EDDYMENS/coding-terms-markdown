@@ -6,6 +6,23 @@
 */
 /* Initizialize library */
 
+//constants
+// window.devless_token = "";
+// window.devless_key = "localhost";
+// window.devless_domain_name = "localhost";
+
+
+
+// //http, data, chrome, chrome-extension, https, chrome-extension-resource.
+// window.devless_request_protocol = "http";
+
+// //change port number if required
+// window.devless_port = 9000;
+
+
+
+window.devless_instance_url = 
+							window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
 
 var Devless =
 {
@@ -271,7 +288,6 @@ var Devless =
 			callback(response);
 
 			},true);
-
 	},
 
 	token: function(callback) {
