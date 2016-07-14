@@ -7,6 +7,17 @@
 /* Initizialize library */
 
 //constants
+// window.devless_token = "";
+// window.devless_key = "localhost";
+// window.devless_domain_name = "localhost";
+
+
+
+// //http, data, chrome, chrome-extension, https, chrome-extension-resource.
+// window.devless_request_protocol = "http";
+
+// //change port number if required
+// window.devless_port = 9000;
 
 
 
@@ -27,7 +38,6 @@ var Devless =
 			sub_url = "/api/v1/service/auth/script";
 			Devless.requestProcessor(data, sub_url,  "POST", function(response){
 				response = JSON.parse(response);
-				console.log(response);
 				if (response.status_code == 631){
 
 					console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
@@ -307,7 +317,7 @@ var Devless =
 		  else if (this.readyState === 4 && parse == true ){
 
 		  	if(this.status == 200) {
-		  		response = JSON.parse(this.responseText);
+		  		response = this.responseText;
 		  		callback(response);
 		  	} else {
 
