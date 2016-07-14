@@ -9,6 +9,34 @@
 
 var Devless =
 {
+	init: function (constants){
+
+		window.devless_token = constants.token;
+		window.devless_key = constants.key;
+		window.devless_instance_url = constants.domain;
+		
+			//check if connection was successfull
+			data = {};
+			console.info("App is trying to connect to Devless .....");
+			sub_url = "/api/v1/service/auth/script";
+			Devless.requestProcessor(data, sub_url,  "POST", function(response){
+				response = JSON.parse(response);
+				if (response.status_code == 631){
+
+					console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
+				} else if (response.status_code == undefined){
+
+					console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+				} else if (response.status_code == 1000) {
+					console.debug("Your app connected to Devless successfully and you have auth service installed");
+
+				} else {
+					console.debug("your app connected to Devless successfully. you can get service from store.devless.io ")
+				}
+			},true);
+
+
+	},
 	signUp: function (data, callback){
 			var data = JSON.stringify({
 			  "resource": [
@@ -144,7 +172,6 @@ var Devless =
 			}
 			sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
 			Devless.requestProcessor("", sub_url,  "GET", function(response){
-
 				callback(response);
 			})		
 
@@ -152,7 +179,6 @@ var Devless =
 
 	addData: function(serviceName, table, callback, data){
 
-			
 			var payload = JSON.stringify({
 			  "resource": [
 			    {  
@@ -165,12 +191,12 @@ var Devless =
 
 			  ]
 			});
-
+			
 			sub_url = "/api/v1/service/"+serviceName+"/db";
 			Devless.requestProcessor(payload, sub_url,  "POST", function(response){
 
-				
 				callback(response);
+		
 			});
 
 	},
@@ -244,7 +270,7 @@ var Devless =
 
 			callback(response);
 
-			}, false);
+			},true);
 
 	},
 
@@ -254,20 +280,19 @@ var Devless =
 	},
 
 	requestProcessor: function(data, sub_url, method, callback, parse){
-		
-		parse = parse || true ; 
 
+		parse = parse || false ; 
+		
 		var xhr = new XMLHttpRequest();
 
-
 		xhr.addEventListener("readystatechange", function () {
-		  if (this.readyState === 4 && parse == true) {
+		  if (this.readyState === 4 && parse == false) {
 
 		  	response = JSON.parse(this.responseText);
 
 		    callback(response);
 		  }
-		  else if (this.readyState === 4 && parse == false ){
+		  else if (this.readyState === 4 && parse == true ){
 
 		  	callback(this.responseText);
 		  }
