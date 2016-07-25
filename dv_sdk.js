@@ -229,8 +229,8 @@ var Devless =
 
 	},
 
-	//operation types : delete drop truncate
-	delete: function(serviceName, table, where_key, where_value, action, callback){
+	
+	delete: function(serviceName, table, where_key, where_value, callback){
 
 			var payloadObj = 
 				{  
@@ -247,7 +247,7 @@ var Devless =
 				    ]
 				};
 			
-			payloadObj.resource[0].params[0][action] = "true";
+			payloadObj.resource[0].params[0]['delete'] = "true";
 			
 			payloadStr = JSON.stringify(payloadObj);
 			
@@ -260,7 +260,6 @@ var Devless =
 			});
 
 	},
-
 	runScript: function(serviceName, method, data, callback){
 
 			sub_url = "/api/v1/service/"+serviceName+"/script";
