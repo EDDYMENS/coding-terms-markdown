@@ -292,7 +292,7 @@ var Devless =
 		  		response = JSON.parse(this.responseText);
 		  		callback(response);
 		  	} else {
-
+				callback(response);
 	  			console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
 			}
 		  	
@@ -304,7 +304,7 @@ var Devless =
 		  		response = this.responseText;
 		  		callback(response);
 		  	} else {
-
+				callback(response);
 	  			console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
 			}
 		  }
