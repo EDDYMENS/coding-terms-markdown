@@ -8,16 +8,17 @@
 
 var Devless =  function (constants){
 
-		Devless.devless_token = constants.token;
-		Devless.devless_instance_url = constants.domain;
+		window.devless_token = constants.token;
+		window.devless_instance_url = constants.domain;
 	
 
 			//check if connection was successfull
 			data = {};
 			console.info("App is trying to connect to Devless ...");
 			sub_url = "/api/v1/service/auth/script";
-			Devless.prototype.requestProcessor(data, sub_url,  "POST", function(response){
+			this.requestProcessor(data, sub_url,  "POST", function(response){
 				response = JSON.parse(response);
+				console.log(response);
 				if (response.status_code == 631){
 
 					console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
@@ -51,7 +52,7 @@ var Devless =  function (constants){
 			});
 
 			sub_url = "/api/v1/service/auth/script";
-			Devless.prototype.requestProcessor(data, sub_url,  "POST", function(response){
+			this.requestProcessor(data, sub_url,  "POST", function(response){
 
 				
 				if(response.status_code == 1000 ){
@@ -84,7 +85,7 @@ var Devless =  function (constants){
 			
 			var data = JSON.stringify(user_data);
 			sub_url = "/api/v1/service/auth/script";
-			Devless.prototype.requestProcessor(data, sub_url,  "POST", function(response){
+			this.requestProcessor(data, sub_url,  "POST", function(response){
 
 				if(response.status_code == 1000 ){
 
@@ -109,7 +110,7 @@ var Devless =  function (constants){
 
 			var data = JSON.stringify(user_data);
 			sub_url = "/api/v1/service/auth/script";
-			Devless.prototype.requestProcessor(data, sub_url,  "POST", function(response){
+			this.requestProcessor(data, sub_url,  "POST", function(response){
 
 				callback(response);
 				sessionStorage.removeItem('devless_user_token'+Devless.devless_domain_name+Devless.devless_token);
@@ -129,7 +130,7 @@ var Devless =  function (constants){
 
 			var data = JSON.stringify(user_data);
 			sub_url = "/api/v1/service/auth/script";
-			Devless.prototype.requestProcessor(data, sub_url,  "POST", function(response){
+			this.requestProcessor(data, sub_url,  "POST", function(response){
 
 				
 				
@@ -147,7 +148,7 @@ var Devless =  function (constants){
 			});
 
 			sub_url = "/api/v1/service/auth/script";
-			Devless.prototype.requestProcessor(data, sub_url,  "PATCH", function(response){
+			this.requestProcessor(data, sub_url,  "PATCH", function(response){
 
 				
 				if(response.status_code == 1000 ){
@@ -166,13 +167,26 @@ var Devless =  function (constants){
 	Devless.prototype.queryData = function(serviceName, table, callback, params){
 		params = params || {};
 		var	parameters = "";
+		innerParams = function (key, params) {
+			for(var eachParam in params) {
+				parameters = "&"+key+"="+eachParam+parameters;
+			}
+
+		}
 			//organise parameters
 			for (var key in params) {
-			if (!params.hasOwnProperty(key)) { /**/ }
-				parameters = "&"+key+"="+params[key]+parameters;
-		}
+				if (!params.hasOwnProperty(key)) { /**/ }
+					if (params[key] instanceof Array ) {
+						innerParams(key, params[key]) 
+					} else {
+						parameters = "&"+key+"="+value+parameters;
+					}
+				
+			}
+
 		sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
-		Devless.prototype.requestProcessor("", sub_url,  "GET", function(response){
+		
+		this.requestProcessor("", sub_url,  "GET", function(response){
 			callback(response);
 		})		
 		return this;	
@@ -194,7 +208,7 @@ var Devless =  function (constants){
 		});
 
 		sub_url = "/api/v1/service/"+serviceName+"/db";
-		Devless.prototype.requestProcessor(payload, sub_url,  "POST", function(response){
+		this.requestProcessor(payload, sub_url,  "POST", function(response){
 
 			callback(response);
 
@@ -224,7 +238,7 @@ var Devless =  function (constants){
 		});
 
 		sub_url = "/api/v1/service/"+serviceName+"/db";
-		Devless.prototype.requestProcessor(payload, sub_url, "PATCH", function(response){
+		this.requestProcessor(payload, sub_url, "PATCH", function(response){
 
 
 			callback(response);
@@ -256,7 +270,7 @@ var Devless =  function (constants){
 
 		sub_url = "/api/v1/service/"+serviceName+"/db";
 
-		Devless.prototype.requestProcessor(payloadStr, sub_url,  "DELETE", function(response){
+		this.requestProcessor(payloadStr, sub_url,  "DELETE", function(response){
 
 			callback(response);
 
@@ -267,9 +281,31 @@ var Devless =  function (constants){
 
 	Devless.prototype.token = function(callback) {
 
-		callback(sessionStorage.getItem('devless_user_token'+Devless.devless_instance_url+Devless.devless_token));
+		callback(sessionStorage.getItem('devless_user_token'+window.devless_instance_url+Devless.devless_token));
 		return this;
 	}
+
+	Devless.prototype.call = function(service, method, params, callback) {
+
+		var payload = JSON.stringify({
+		  "jsonrpc": "2.0",
+		  "method": service,
+		  "id": Devless.getId(1, 10000000),
+		  "params": params
+		});
+
+		sub_url = "/api/v1/service/"+service+"/rpc?action="+method;
+
+		this.requestProcessor(payload, sub_url,  "POST", function(response){
+
+			callback(response);
+
+		});
+	}
+
+	Devless.prototype.getId =  function (min, max) {
+    	return Math.floor(Math.random() * (max - min + 1)) + min;
+ 	}
 
 	Devless.prototype.requestProcessor = function(data, sub_url, method, callback, parse){
 
@@ -288,7 +324,7 @@ var Devless =  function (constants){
 					callback(response);
 				} else {
 					callback(response);
-					console.error("Devless cannot be found at "+Devless.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+					console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
 				}
 
 
@@ -300,19 +336,17 @@ var Devless =  function (constants){
 					callback(response);
 				} else {
 					callback(response);
-					console.error("Devless cannot be found at "+Devless.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+					console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
 				}
 			}
 		});
-		console.log(Devless.devless_instance_url+sub_url);
-		xhr.open(method.toUpperCase(), Devless.devless_instance_url+sub_url);
-		xhr.setRequestHeader("content-type", "application/json");
-		xhr.setRequestHeader("devless-token", Devless.devless_token);
 		
-
+		xhr.open(method.toUpperCase(), window.devless_instance_url+sub_url);
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("devless-token", devless_token);
 		if(sessionStorage.getItem('devless_user_token') != ""){
 
-			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+Devless.devless_instance_url+Devless.devless_token) );
+			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_instance_url+Devless.devless_token) );
 		}
 		
 		
