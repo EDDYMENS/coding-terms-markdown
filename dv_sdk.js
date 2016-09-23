@@ -7,7 +7,7 @@
 /* Initizialize library */
 
 window.devless_instance_url = 
-							window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
+window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
 
 var Devless =
 {
