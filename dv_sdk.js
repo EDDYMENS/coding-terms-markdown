@@ -15,7 +15,7 @@ var Devless =  function (constants){
 			//check if connection was successfull
 			data = {};
 			console.info("App is trying to connect to Devless ...");
-			sub_url = "/api/v1/service/auth/script";
+			sub_url = "/api/v1/service/dvauth/script";
 			this.requestProcessor(data, sub_url,  "POST", function(response){
 				response = JSON.parse(response);
 				console.log(response);
@@ -51,7 +51,7 @@ var Devless =  function (constants){
 				]
 			});
 
-			sub_url = "/api/v1/service/auth/script";
+			sub_url = "/api/v1/service/dvauth/script";
 			this.requestProcessor(data, sub_url,  "POST", function(response){
 
 				
@@ -185,7 +185,7 @@ var Devless =  function (constants){
 			}
 
 		sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
-		
+
 		this.requestProcessor("", sub_url,  "GET", function(response){
 			callback(response);
 		})		
@@ -344,9 +344,9 @@ var Devless =  function (constants){
 		xhr.open(method.toUpperCase(), window.devless_instance_url+sub_url);
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("devless-token", devless_token);
-		if(sessionStorage.getItem('devless_user_token') != ""){
+		if(sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token) != ""){
 
-			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_instance_url+Devless.devless_token) );
+			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token) );
 		}
 		
 		
