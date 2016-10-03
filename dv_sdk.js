@@ -37,7 +37,7 @@ var Devless =  function (constants){
 
 		
 	//add options to params object
-	Devless.prototype.queryData = function(serviceName, table, callback, params){
+	Devless.prototype.queryData = function(serviceName, table, params, callback){
 		params = params || {};
 		var	parameters = "";
 
@@ -67,7 +67,7 @@ var Devless =  function (constants){
 		return this;	
 	}
 
-	Devless.prototype.addData = function(serviceName, table, callback, data){
+	Devless.prototype.addData = function(serviceName, table, data, callback){
 
 		var payload = JSON.stringify({
 			"resource": [
@@ -92,7 +92,7 @@ var Devless =  function (constants){
 
 	}
 
-	Devless.prototype.updateData = function(serviceName, table, where_key, where_value, callback,  data){
+	Devless.prototype.updateData = function(serviceName, table, where_key, where_value, data, callback){
 
 		var payload = JSON.stringify({  
 			"resource":[  
@@ -122,7 +122,7 @@ var Devless =  function (constants){
 	}
 
 	
-	Devless.prototype.delete = function(serviceName, table, where_key, where_value, callback){
+	Devless.prototype.deleteData = function(serviceName, table, where_key, where_value, callback){
 
 		var payloadObj = 
 		{  
@@ -154,10 +154,15 @@ var Devless =  function (constants){
 	}
 	
 
-	Devless.prototype.token = function(callback) {
+	Devless.prototype.getToken = function(callback) {
 
 		callback(sessionStorage.getItem('devless_user_token'+window.devless_instance_url+Devless.devless_token));
-		return this;
+		
+	}
+
+	Devless.prototype.setToken = function(token) {
+		sessionStorage.setItem('devless_user_token'+window.devless_instance_url+Devless.devless_token, token);
+		return true;
 	}
 
 	Devless.prototype.call = function(service, method, params, callback) {
