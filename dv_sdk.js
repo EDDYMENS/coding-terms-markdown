@@ -52,7 +52,7 @@ var Devless =  function (constants){
 					if (params[key] instanceof Array ) {
 						innerParams(key, params[key]) 
 					} else {
-						parameters = "&"+key+"="+value+parameters;
+						parameters = "&"+key+"="+parameters;
 					}
 				
 			}
