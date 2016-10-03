@@ -40,9 +40,11 @@ var Devless =  function (constants){
 	Devless.prototype.queryData = function(serviceName, table, callback, params){
 		params = params || {};
 		var	parameters = "";
+
+		//get nested params 
 		innerParams = function (key, params) {
 			for(var eachParam in params) {
-				parameters = "&"+key+"="+eachParam+parameters;
+				parameters = "&"+key+"="+params[eachParam]+parameters;
 			}
 
 		}
@@ -52,7 +54,7 @@ var Devless =  function (constants){
 					if (params[key] instanceof Array ) {
 						innerParams(key, params[key]) 
 					} else {
-						parameters = "&"+key+"="+parameters;
+						parameters = "&"+key+"="+params[key]+parameters;
 					}
 				
 			}
