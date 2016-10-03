@@ -6,23 +6,19 @@
 */
 /* Initizialize library */
 
-window.devless_instance_url = 
-							window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
-
-var Devless =
-{
-	init: function (constants){
+var Devless =  function (constants){
 
 		window.devless_token = constants.token;
-		window.devless_key = constants.key;
 		window.devless_instance_url = constants.domain;
-		
+	
+
 			//check if connection was successfull
 			data = {};
-			console.info("App is trying to connect to Devless .....");
-			sub_url = "/api/v1/service/auth/script";
-			Devless.requestProcessor(data, sub_url,  "POST", function(response){
+			console.info("App is trying to connect to Devless ...");
+			sub_url = "/api/v1/service/dvauth/script";
+			this.requestProcessor(data, sub_url,  "POST", function(response){
 				response = JSON.parse(response);
+				console.log(response);
 				if (response.status_code == 631){
 
 					console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
@@ -34,249 +30,164 @@ var Devless =
 				}
 			},true);
 
+			return this;	
 
-	},
-	signUp: function (data, callback){
-			var data = JSON.stringify({
-			  "resource": [
-			    {
-			      "auth_type": "signup" ,
-			      "first_name": data.first_name ,
-			      "last_name": data.last_name ,
-			      "email": data.email ,
-			      "phone_number": data.phone_number ,
-			      "username": data.username ,
-			      "password": data.password ,
-			    }
-			  ]
-			});
+		}
 
-			sub_url = "/api/v1/service/auth/script";
-			Devless.requestProcessor(data, sub_url,  "POST", function(response){
 
-				
-				if(response.status_code == 1000 ){
-
-					
-					sessionStorage.setItem('devless_user_token'+window.devless_domain_name+window.devless_token, response.payload[0]);
- 
-				}
-				
-				callback(response);
-			});
-
-			
-
-	},
-
-	logIn: function (identifier_type, identifier, password, callback){
-
-		partial_user_data = {
-			  "resource": [
-			    {
-			      "auth_type": "login" ,
-			      
-			      "password": password ,
-			    }
-			  ]
-			}
-
-			window.user_data = partial_user_data;
-			user_data.resource[0][identifier_type] = identifier; 
-			
-			var data = JSON.stringify(user_data);
-			sub_url = "/api/v1/service/auth/script";
-			Devless.requestProcessor(data, sub_url,  "POST", function(response){
-
-				if(response.status_code == 1000 ){
-
-					
-					sessionStorage.setItem('devless_user_token'+window.devless_domain_name+window.devless_token, response.payload[0]);
-				}
-				
-				callback(response);
-			});
-	},
-
-	logOut: function (callback){
 		
-		user_data = {
-			  "resource": [
-			    {
-			      "auth_type": "logout" 
-			    }
-			  ]
-			}
-
-			var data = JSON.stringify(user_data);
-			sub_url = "/api/v1/service/auth/script";
-			Devless.requestProcessor(data, sub_url,  "POST", function(response){
-
-				callback(response);
-				sessionStorage.removeItem('devless_user_token'+window.devless_domain_name+window.devless_token);
-				
-			});
-	},
-
-	getProfile: function (callback){
-		user_data = {
-			  "resource": [
-			    {
-			      "auth_type": "profile" 
-			    }
-			  ]
-			}
-
-			var data = JSON.stringify(user_data);
-			sub_url = "/api/v1/service/auth/script";
-			Devless.requestProcessor(data, sub_url,  "POST", function(response){
-
-				
-				
-				callback(response);
-			});
-	},
-
-	updateProfile: function (data, callback){
-
-			var data = JSON.stringify({
-			  "resource": [
-			     data
-			  ]
-			});
-
-			sub_url = "/api/v1/service/auth/script";
-			Devless.requestProcessor(data, sub_url,  "PATCH", function(response){
-
-				
-				if(response.status_code == 1000 ){
-
-					
-					sessionStorage.setItem('devless_user_token'+window.devless_domain_name+window.devless_token, response.payload[0]);
- 
-				}
-				
-				callback(response);
-			})		
-	},
-
 	//add options to params object
-	queryData: function(serviceName, table, callback, params){
-			params = params || {};
-			var	parameters = "";
+	Devless.prototype.queryData = function(serviceName, table, params, callback){
+		params = params || {};
+		var	parameters = "";
+
+		//get nested params 
+		innerParams = function (key, params) {
+			for(var eachParam in params) {
+				parameters = "&"+key+"="+params[eachParam]+parameters;
+			}
+
+		}
 			//organise parameters
 			for (var key in params) {
-				  if (!params.hasOwnProperty(key)) { /**/ }
-				    parameters = "&"+key+"="+params[key]+parameters;
+				if (!params.hasOwnProperty(key)) { /**/ }
+					if (params[key] instanceof Array ) {
+						innerParams(key, params[key]) 
+					} else {
+						parameters = "&"+key+"="+params[key]+parameters;
+					}
+				
 			}
-			sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
-			Devless.requestProcessor("", sub_url,  "GET", function(response){
-				callback(response);
-			})		
 
-	},
+		sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
 
-	addData: function(serviceName, table, callback, data){
+		this.requestProcessor("", sub_url,  "GET", function(response){
+			callback(response);
+		})		
+		return this;	
+	}
 
-			var payload = JSON.stringify({
-			  "resource": [
-			    {  
-			         "name": table,
-			         "field":[  
+	Devless.prototype.addData = function(serviceName, table, data, callback){
 
-			            data
-			         ]
-		      }
+		var payload = JSON.stringify({
+			"resource": [
+			{  
+				"name": table,
+				"field":[  
 
-			  ]
-			});
-			
-			sub_url = "/api/v1/service/"+serviceName+"/db";
-			Devless.requestProcessor(payload, sub_url,  "POST", function(response){
+				data
+				]
+			}
 
-				callback(response);
-		
-			});
-
-	},
-
-	updateData: function(serviceName, table, where_key, where_value, callback,  data){
-
-		var payload = JSON.stringify({  
-	   	"resource":[  
-	      {  
-	         "name":table,
-	         "params":[  
-	            {  
-	               "where": where_key+","+where_value,
-	               "data":[
-	                   data
-	               ]
-
-	            }
-	         ]
-	      }
-
-	    ]
+			]
 		});
 
-			sub_url = "/api/v1/service/"+serviceName+"/db";
-			Devless.requestProcessor(payload, sub_url,  "PATCH", function(response){
+		sub_url = "/api/v1/service/"+serviceName+"/db";
+		this.requestProcessor(payload, sub_url,  "POST", function(response){
 
-				
-				callback(response);
-			});
+			callback(response);
 
-	},
+		});
+		return this;
+
+	}
+
+	Devless.prototype.updateData = function(serviceName, table, where_key, where_value, data, callback){
+
+		var payload = JSON.stringify({  
+			"resource":[  
+			{  
+				"name":table,
+				"params":[  
+				{  
+					"where": where_key+","+where_value,
+					"data":[
+					data
+					]
+
+				}
+				]
+			}
+
+			]
+		});
+
+		sub_url = "/api/v1/service/"+serviceName+"/db";
+		this.requestProcessor(payload, sub_url, "PATCH", function(response){
+
+
+			callback(response);
+		});
+		return this;
+	}
 
 	
-	delete: function(serviceName, table, where_key, where_value, callback){
+	Devless.prototype.deleteData = function(serviceName, table, where_key, where_value, callback){
 
-			var payloadObj = 
+		var payloadObj = 
+		{  
+			"resource":[  
+			{  
+				"name":table,
+				"params":[  
 				{  
-				   	"resource":[  
-				      {  
-				         "name":table,
-				         "params":[  
-				            {  
-			                   "where": where_key+",=,"+where_value
-					         }
-				         ]
-				      }
+					"where": where_key+",=,"+where_value
+				}
+				]
+			}
 
-				    ]
-				};
-			
-			payloadObj.resource[0].params[0]['delete'] = "true";
-			
-			payloadStr = JSON.stringify(payloadObj);
-			
-			sub_url = "/api/v1/service/"+serviceName+"/db";
-			
-			Devless.requestProcessor(payloadStr, sub_url,  "DELETE", function(response){
+			]
+		};
+
+		payloadObj.resource[0].params[0]['delete'] = "true";
+
+		payloadStr = JSON.stringify(payloadObj);
+
+		sub_url = "/api/v1/service/"+serviceName+"/db";
+
+		this.requestProcessor(payloadStr, sub_url,  "DELETE", function(response){
 
 			callback(response);
 
-			});
+		});
+		return this; 
+	}
+	
 
-	},
-	runScript: function(serviceName, method, data, callback){
+	Devless.prototype.getToken = function(callback) {
 
-			sub_url = "/api/v1/service/"+serviceName+"/script";
-			data = JSON.stringify({ "resource": [data]});
-			Devless.requestProcessor(data, sub_url,  method.toUpperCase(), function(response){
+		callback(sessionStorage.getItem('devless_user_token'+window.devless_instance_url+Devless.devless_token));
+		
+	}
+
+	Devless.prototype.setToken = function(token) {
+		sessionStorage.setItem('devless_user_token'+window.devless_instance_url+Devless.devless_token, token);
+		return true;
+	}
+
+	Devless.prototype.call = function(service, method, params, callback) {
+
+		var payload = JSON.stringify({
+		  "jsonrpc": "2.0",
+		  "method": service,
+		  "id": Devless.getId(1, 10000000),
+		  "params": params
+		});
+
+		sub_url = "/api/v1/service/"+service+"/rpc?action="+method;
+
+		this.requestProcessor(payload, sub_url,  "POST", function(response){
 
 			callback(response);
 
-			},true);
-	},
+		});
+	}
 
-	token: function(callback) {
+	Devless.prototype.getId =  function (min, max) {
+    	return Math.floor(Math.random() * (max - min + 1)) + min;
+ 	}
 
-			callback(sessionStorage.getItem('devless_user_token'));
-	},
-
-	requestProcessor: function(data, sub_url, method, callback, parse){
+	Devless.prototype.requestProcessor = function(data, sub_url, method, callback, parse){
 
 		parse = parse || false ; 
 		
@@ -285,50 +196,48 @@ var Devless =
 		xhr.addEventListener("readystatechange", function () {
 
 
-					
-				
-		  if (this.readyState === 4 && parse == false) {
-		  	if(this.status == 200) {
-		  		response = JSON.parse(this.responseText);
-		  		callback(response);
-		  	} else {
-				callback(response);
-	  			console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
-			}
-		  	
-		    
-		  }
-		  else if (this.readyState === 4 && parse == true ){
 
-		  	if(this.status == 200) {
-		  		response = this.responseText;
-		  		callback(response);
-		  	} else {
-				callback(response);
-	  			console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+
+			if (this.readyState === 4 && parse == false) {
+				if(this.status == 200) {
+					response = JSON.parse(this.responseText);
+					callback(response);
+				} else {
+					callback(response);
+					console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+				}
+
+
 			}
-		  }
+			else if (this.readyState === 4 && parse == true ){
+
+				if(this.status == 200) {
+					response = this.responseText;
+					callback(response);
+				} else {
+					callback(response);
+					console.error("Devless cannot be found at "+window.devless_instance_url+" Please copy the url from the `App tab`  on you Devless instance by clicking on  `connect to my app`")
+				}
+			}
 		});
-
+		
 		xhr.open(method.toUpperCase(), window.devless_instance_url+sub_url);
 		xhr.setRequestHeader("content-type", "application/json");
-		xhr.setRequestHeader("devless-key", window.devless_key);
-		xhr.setRequestHeader("devless-token", window.devless_token);
-		
+		xhr.setRequestHeader("devless-token", devless_token);
+		if(sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token) != ""){
 
-		if(sessionStorage.getItem('devless_user_token') != ""){
-
-			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_domain_name+window.devless_token) );
+			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token) );
 		}
 		
 		
 
 
 		xhr.send(data);
-	},
+		
+	}
 
 	
-}
+
 
 
 
