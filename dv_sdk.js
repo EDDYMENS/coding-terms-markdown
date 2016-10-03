@@ -6,7 +6,16 @@
 */
 /* Initizialize library */
 
+<<<<<<< HEAD
 var Devless =  function (constants){
+=======
+window.devless_instance_url = 
+window.devless_request_protocol+"://"+window.devless_domain_name+":"+window.devless_port;
+
+var Devless =
+{
+	init: function (constants){
+>>>>>>> 1ea4acc35d4cb3639845c5325eac27a1fda8be0e
 
 		window.devless_token = constants.token;
 		window.devless_instance_url = constants.domain;
