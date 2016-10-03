@@ -74,18 +74,24 @@ The functions parameters are pretty obvious the identifier_type refers to the fi
 
 **delete:**
 
-You may delete data  using ``Devless.delete(serviceName, table, where_key, where_value, callback)``
+You may delete data  using ``Devless.deleteData(serviceName, table, where_key, where_value, callback)``
 
 eg:
 
 ```
-Devless.delete("serviceName", "table", "id", 1, function(response){console.log(response)})
+Devless.deleteData("serviceName", "table", "id", 1, function(response){console.log(response)})
 ```
 **token:**
-
+You will need to set an access token incase you need to login a user 
+You can set user access token with ``Devless.token(token, callback)``
 You can have access to the current token with ``Devless.token(callback)``
 
 **response structure**
 * All response from the Devless backend have status_code where 700 means internal failure
 * A message with verbose response to the event 
 * An array payload containing returned results and properties 
+
+
+
+
+
