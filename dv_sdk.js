@@ -241,20 +241,3 @@ var Devless =  function (constants){
 
 
 
-evless_instance_url+window.devless_token) != ""){
-
-			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token) );
-		}
-		
-		
-
-
-		xhr.send(data);
-		
-	}
-
-	
-
-
-
-
