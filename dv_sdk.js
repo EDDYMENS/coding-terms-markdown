@@ -224,7 +224,7 @@ var Devless =  function (constants){
 		xhr.open(method.toUpperCase(), window.devless_instance_url+sub_url);
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("devless-token", devless_token);
-		if(sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token) != ""){
+		if(sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token != "")){
 
 			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token'+window.devless_instance_url+window.devless_token) );
 		}
