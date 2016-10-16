@@ -1,5 +1,5 @@
 
-/**
+	/**
 @author Devless
 @version 0.01
 @description Devless sdk for Javascript	
@@ -235,9 +235,3 @@ var Devless =  function (constants){
 		xhr.send(data);
 		
 	}
-
-	
-
-
-
-
