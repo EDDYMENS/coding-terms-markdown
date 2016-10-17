@@ -2,7 +2,8 @@
 The Devless JS SDK provides a host of functions for working with data from the Devless backend.
 
 ##### Getting Started
-There are a couple of ways to introduce the  sdk into your application 
+There are a couple of ways to introduce the  sdk into your application
+
 1. Using the [CDN](https://library.devless.io/cdn/1.0/dv_sdk.js)  
 2. Downloading from the [Github Repo](https://github.com/DevlessTeam/DV-JS-SDK)
 
