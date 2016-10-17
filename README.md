@@ -3,8 +3,8 @@ The Devless JS SDK provides a host of functions for working with data from the D
 
 ##### Getting Started
 There are a couple of ways to introduce the  sdk into your application 
-1. Using the [CDN](http://library.devless.io/cdn/dv-beta-1/dv_sdk.js)  
-2. Downloading from the [Github Repo](https://github.com/DevlessTeam/DV-JS-SDK/edit/master/README.md)
+1. Using the [CDN](https://library.devless.io/cdn/1.0/dv_sdk.js)  
+2. Downloading from the [Github Repo](https://github.com/DevlessTeam/DV-JS-SDK)
 
 Once you have the SDK in your application you may now heard over to your Devless instance , then the App Tab , from there you can click on connect to my App and copy the connection details under the web tab . It should look something like below
 ```
