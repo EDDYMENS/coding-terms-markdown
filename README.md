@@ -9,7 +9,7 @@ There are a couple of ways to introduce the  sdk into your application
 Once you have the SDK in your application you may now heard over to your Devless instance , then the App Tab , from there you can click on connect to my App and copy the connection details under the web tab . It should look something like below
 ```
 var constants = { "token":"955c8a0dc37b4a22b5950a9e0e9491d0", "key":"TEMPORAL-KEY", "domain":"http://localhost:9000" }
-Devless.init(constants)
+Devless = new Devless(constants);
 ```
  You can follow up on connection status from the console tab of your browser developer tool.
 
