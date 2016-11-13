@@ -22,7 +22,7 @@ Access or query data from any table from the backend using this function.
 params={
     size:2,
     offset:2,
-    orderBy:"name"
+    orderBy:"name",
     where:["id,1","name,edmond"]
 }
 
