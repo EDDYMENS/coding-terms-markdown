@@ -10,22 +10,22 @@
 
 (function(global) {
 	"use strict";
-	  
+
+	var baseUrl = "/api/v1/service/";
 	var Devless = function(constants) {
 
-		if(!constants){
-		  console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
-		  return;
+		if (!constants) {
+			console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
+			return;
 		}
 		console.info("App is trying to connect to Devless ...");
-		var sub_url = "/api/v1/service/dvauth/script";
+		var sub_url = baseUrl + "/dvauth/script";
 		var data = {};
 		var DevlessInstance = new Devless.init(constants);
-        global.returnedInstance ='';
+		global.returnedInstance = ''; //will be taken off if i find a better way
 
-		 requestProcessor.call(DevlessInstance,data, sub_url, "POST", function(response) {
-			 response = JSON.parse(response);
-			console.log(response);
+		requestProcessor.call(DevlessInstance, data, sub_url, "POST", function(response) {
+			response = JSON.parse(response);
 			if (response.status_code == 631) {
 
 				console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
@@ -36,190 +36,185 @@
 
 			} else {
 				console.debug("your app connected to Devless successfully. you can get services from store.devless.io ");
+
+				returnedInstance = DevlessInstance; //creates and returns a new Devless instance only if connected successfully
 				
-				returnedInstance  = DevlessInstance; //creates and returns a new Devless instance only if connected successfully
-				//console.log(DevlessInstance);
-				//console.log(returnedInstance);
 			}
 		}, true);
-		
+
 		return DevlessInstance;
 	}
 
-	Devless.prototype = {queryData:queryData,
-                         addData:addData
-	 };
+	Devless.prototype = {
+		queryData: queryData,
+		addData: addData,
+		updateData: updateData,
+		deleteData: deleteData,
+		getToken: getToken,
+		setToken: setToken,
+		call: call
+	};
 
-	Devless.init = function (constants) {
+	Devless.init = function(constants) {
 		var Self = this; //using this can be ambigiouse in certain context. so  i aliased to point to this very constructor.
 		Self.devless_token = constants.token;
 		Self.devless_instance_url = constants.domain;
 	}
 
 	Devless.init.prototype = Devless.prototype;
-    
 
 
-    //add options to params object
-       function queryData(serviceName, table, params, callback){
-       	console.log(this);
+
+	//add options to params object
+	function queryData(serviceName, table, params, callback) {
 		params = params || {};
-		var	parameters = "";
+		var parameters = "";
 
 		//get nested params 
-		var innerParams = function (key, params) {
-			for(var eachParam in params) {
-				parameters = "&"+key+"="+params[eachParam]+parameters;
+		var innerParams = function(key, params) {
+				for (var eachParam in params) {
+					parameters = "&" + key + "=" + params[eachParam] + parameters;
+				}
+
+			}
+			//organise parameters
+		for (var key in params) {
+			if (!params.hasOwnProperty(key)) { /**/ }
+			if (params[key] instanceof Array) {
+				innerParams(key, params[key])
+			} else {
+				parameters = "&" + key + "=" + params[key] + parameters;
 			}
 
 		}
-			//organise parameters
-			for (var key in params) {
-				if (!params.hasOwnProperty(key)) { /**/ }
-					if (params[key] instanceof Array ) {
-						innerParams(key, params[key]) 
-					} else {
-						parameters = "&"+key+"="+params[key]+parameters;
-					}
-				
-			}
 
-		var sub_url = "/api/v1/service/"+serviceName+"/db?table="+table+parameters;
+		var sub_url = baseUrl + serviceName + "/db?table=" + table + parameters;
 
-		requestProcessor.call(this,"", sub_url,  "GET", function(response){
+		requestProcessor.call(this, "", sub_url, "GET", function(response) {
 			callback(response);
-		})		
-		return this;	
+		})
+		return this;
 	}
 
-	   function addData(serviceName, table, data, callback){
+	function addData(serviceName, table, data, callback) {
 
 		var payload = JSON.stringify({
-			"resource": [
-			{  
-				"name": table,
-				"field":[  
+			"resource": [{
+					"name": table,
+					"field": [
 
-				data
-				]
-			}
-
-			]
-		});
-
-		sub_url = "/api/v1/service/"+serviceName+"/db";
-		requestProcessor.call(this,payload, sub_url,  "POST", function(response){
-
-			callback(response);
-
-		});
-		return this;
-
-	}
-
-	 function updateData (serviceName, table, where_key, where_value, data, callback){
-
-		var payload = JSON.stringify({  
-			"resource":[  
-			{  
-				"name":table,
-				"params":[  
-				{  
-					"where": where_key+","+where_value,
-					"data":[
-					data
+						data
 					]
-
 				}
-				]
-			}
 
 			]
 		});
 
-		sub_url = "/api/v1/service/"+serviceName+"/db";
-		requestProcessor.call(this,payload, sub_url, "PATCH", function(response){
+		var sub_url = baseUrl + serviceName + "/db";
+		requestProcessor.call(this, payload, sub_url, "POST", function(response) {
+
+			callback(response);
+
+		});
+		return this;
+
+	}
+
+	function updateData(serviceName, table, where_key, where_value, data, callback) {
+
+		var payload = JSON.stringify({
+			"resource": [{
+					"name": table,
+					"params": [{
+						"where": where_key + "," + where_value,
+						"data": [
+							data
+						]
+
+					}]
+				}
+
+			]
+		});
+
+		var sub_url = baseUrl + serviceName + "/db";
+		requestProcessor.call(this, payload, sub_url, "PATCH", function(response) {
 			callback(response);
 		});
 		return this;
 	}
 
-	function deleteData(serviceName, table, where_key, where_value, callback){
+	function deleteData(serviceName, table, where_key, where_value, callback) {
 
-		var payloadObj = 
-		{  
-			"resource":[  
-			{  
-				"name":table,
-				"params":[  
-				{  
-					"where": where_key+",=,"+where_value
+		var payloadObj = {
+			"resource": [{
+					"name": table,
+					"params": [{
+						"where": where_key + ",=," + where_value
+					}]
 				}
-				]
-			}
 
 			]
 		};
 
 		payloadObj.resource[0].params[0]['delete'] = "true";
 
-		payloadStr = JSON.stringify(payloadObj);
+		var payloadStr = JSON.stringify(payloadObj);
 
-		sub_url = "/api/v1/service/"+serviceName+"/db";
+		var sub_url = baseUrl + serviceName + "/db";
 
-		requestProcessor.call(this,payloadStr, sub_url,  "DELETE", function(response){
+		requestProcessor.call(this, payloadStr, sub_url, "DELETE", function(response) {
 
 			callback(response);
 
 		});
-		return this; 
+		return this;
 	}
 
 	function getToken(callback) {
 		var withCallback = callback || false;
-        if(withCallback){
-		callback(sessionStorage.getItem('devless_user_token'+this.devless_instance_url+Devless.devless_token));     	
-        }else {
-        	
-        	return sessionStorage.getItem('devless_user_token'+this.devless_instance_url+Devless.devless_token)
-        }
-		
+		if (withCallback) {
+			callback(sessionStorage.getItem('devless_user_token' + this.devless_instance_url + this.devless_token));
+		} else {
+
+			return sessionStorage.getItem('devless_user_token' + this.devless_instance_url + this.devless_token)
+		}
+
 	}
 
 	function setToken(token) {
-		sessionStorage.setItem('devless_user_token'+this.devless_instance_url+this.devless_token, token);
+		sessionStorage.setItem('devless_user_token' + this.devless_instance_url + this.devless_token, token);
 		return true;
 	}
 
 	function call(service, method, params, callback) {
 
 		var payload = JSON.stringify({
-		  "jsonrpc": "2.0",
-		  "method": service,
-		  "id":getId(1, 10000000),
-		  "params": params
+			"jsonrpc": "2.0",
+			"method": service,
+			"id": getId(1, 10000000),
+			"params": params
 		});
+		
+		var sub_url = baseUrl + service + "/rpc?action=" + method;
 
-		sub_url = "/api/v1/service/"+service+"/rpc?action="+method;
-
-		requestProcessor.call(this,payload, sub_url,  "POST", function(response){
+		requestProcessor.call(this, payload, sub_url, "POST", function(response) {
 
 			callback(response);
 
 		});
 	}
 
-	function getId (min, max) {
-    	return Math.floor(Math.random() * (max - min + 1)) + min;
- 	}
-	
+	function getId(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 
 
 
-     //Took of the requestPrecessor off the *this* to make it private for internal of operations only.
-     //it is inaccessible outside but can be called within because its lexical scope with respect to the
-     //other function. 
-	 function requestProcessor (data, sub_url, method, callback, parse) {
+	//Took of the requestPrecessor off the *this* to make it private for internal operations only.
+	//it is inaccessible outside but can be called within because its lexical scope with respect to the
+	//other function. 
+	function requestProcessor(data, sub_url, method, callback, parse) {
 		parse = parse || false;
 
 		var xhr = new XMLHttpRequest();
@@ -227,10 +222,10 @@
 		xhr.addEventListener("readystatechange", function() {
 
 
-              var response ='';
+			var response = '';
 			if (this.readyState === 4 && parse == false) {
 				if (this.status == 200) {
-					 response = JSON.parse(this.responseText);
+					response = JSON.parse(this.responseText);
 					callback(response);
 				} else {
 					callback(response);
@@ -241,7 +236,7 @@
 			} else if (this.readyState === 4 && parse == true) {
 
 				if (this.status == 200) {
-					 response = this.responseText;
+					response = this.responseText;
 					callback(response);
 				} else {
 					callback(response);
