@@ -117,6 +117,104 @@
 
 	}
 
+	 function updateData (serviceName, table, where_key, where_value, data, callback){
+
+		var payload = JSON.stringify({  
+			"resource":[  
+			{  
+				"name":table,
+				"params":[  
+				{  
+					"where": where_key+","+where_value,
+					"data":[
+					data
+					]
+
+				}
+				]
+			}
+
+			]
+		});
+
+		sub_url = "/api/v1/service/"+serviceName+"/db";
+		requestProcessor.call(this,payload, sub_url, "PATCH", function(response){
+			callback(response);
+		});
+		return this;
+	}
+
+	function deleteData(serviceName, table, where_key, where_value, callback){
+
+		var payloadObj = 
+		{  
+			"resource":[  
+			{  
+				"name":table,
+				"params":[  
+				{  
+					"where": where_key+",=,"+where_value
+				}
+				]
+			}
+
+			]
+		};
+
+		payloadObj.resource[0].params[0]['delete'] = "true";
+
+		payloadStr = JSON.stringify(payloadObj);
+
+		sub_url = "/api/v1/service/"+serviceName+"/db";
+
+		requestProcessor.call(this,payloadStr, sub_url,  "DELETE", function(response){
+
+			callback(response);
+
+		});
+		return this; 
+	}
+
+	function getToken(callback) {
+		var withCallback = callback || false;
+        if(withCallback){
+		callback(sessionStorage.getItem('devless_user_token'+this.devless_instance_url+Devless.devless_token));     	
+        }else {
+        	
+        	return sessionStorage.getItem('devless_user_token'+this.devless_instance_url+Devless.devless_token)
+        }
+		
+	}
+
+	function setToken(token) {
+		sessionStorage.setItem('devless_user_token'+this.devless_instance_url+this.devless_token, token);
+		return true;
+	}
+
+	function call(service, method, params, callback) {
+
+		var payload = JSON.stringify({
+		  "jsonrpc": "2.0",
+		  "method": service,
+		  "id":getId(1, 10000000),
+		  "params": params
+		});
+
+		sub_url = "/api/v1/service/"+service+"/rpc?action="+method;
+
+		requestProcessor.call(this,payload, sub_url,  "POST", function(response){
+
+			callback(response);
+
+		});
+	}
+
+	function getId (min, max) {
+    	return Math.floor(Math.random() * (max - min + 1)) + min;
+ 	}
+	
+
+
 
      //Took of the requestPrecessor off the *this* to make it private for internal of operations only.
      //it is inaccessible outside but can be called within because its lexical scope with respect to the
