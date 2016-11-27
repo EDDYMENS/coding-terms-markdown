@@ -5,15 +5,15 @@
 */
 /* Initizialize library */
 
-//var constants = { "token":"284b0f10d7720d212acd6097fb00b19b", "domain":"http://solitary-night-6250.herokuapp.com." }; 
-//Devless = new Devless(constants);
-
-(function(global) {
+(function(global /*this will contain the global window object*/) {
 	"use strict";
 
-	var baseUrl = "/api/v1/service/";
-	var Devless = function(constants) {
+	var baseUrl = "/api/v1/service/"; //makes reference to service url easier
 
+	//this func help create devless instance without having to use the new operator. 
+	//which is easy to forget sometimes.(idea borrowed from jquery)
+	var Devless = function(constants) {
+		//just return if nothing is passed. no need to instantiate
 		if (!constants) {
 			console.error("Your app failed to  connect to Devless ): Please make sure token and key is set properly ");
 			return;
@@ -22,8 +22,9 @@
 		var sub_url = baseUrl + "/dvauth/script";
 		var data = {};
 		var DevlessInstance = new Devless.init(constants);
-		global.returnedInstance = ''; //will be taken off if i find a better way
-
+		global.returnedInstance = ''; //serve a hook for devless instance . will be taken off if i find a better way
+         
+        //call is used to control the (this) instance to use ,bcoz requestProcessor is treated as private function 
 		requestProcessor.call(DevlessInstance, data, sub_url, "POST", function(response) {
 			response = JSON.parse(response);
 			if (response.status_code == 631) {
@@ -32,13 +33,13 @@
 			} else if (response.status_code == 1000) {
 
 				console.debug("Your app connected to Devless successfully and you have auth service installed");
-				returnedInstance = DevlessInstance; //creates and returns a new Devless instance only if connected successfully
+				returnedInstance = DevlessInstance; //and returns a new Devless instance only if connected successfully
 
 			} else {
 				console.debug("your app connected to Devless successfully. you can get services from store.devless.io ");
 
-				returnedInstance = DevlessInstance; //creates and returns a new Devless instance only if connected successfully
-				
+				returnedInstance = DevlessInstance; //returns a new Devless instance only if connected successfully
+
 			}
 		}, true);
 
@@ -56,7 +57,7 @@
 	};
 
 	Devless.init = function(constants) {
-		var Self = this; //using this can be ambigiouse in certain context. so  i aliased to point to this very constructor.
+		var Self = this; //using this can be ambigiouse in certain context. so  i aliased it to point to this very constructor.
 		Self.devless_token = constants.token;
 		Self.devless_instance_url = constants.domain;
 	}
@@ -195,7 +196,7 @@
 			"id": getId(1, 10000000),
 			"params": params
 		});
-		
+
 		var sub_url = baseUrl + service + "/rpc?action=" + method;
 
 		requestProcessor.call(this, payload, sub_url, "POST", function(response) {
@@ -211,8 +212,8 @@
 
 
 
-	//Took of the requestPrecessor off the *this* to make it private for internal operations only.
-	//it is inaccessible outside but can be called within because its lexical scope with respect to the
+	//Took off the requestPrecessor from the base prototype to make it private for internal operations only.
+	//it is inaccessible outside but can be called within because of its lexical scope with respect to the
 	//other function. 
 	function requestProcessor(data, sub_url, method, callback, parse) {
 		parse = parse || false;
@@ -248,7 +249,7 @@
 		xhr.open(method.toUpperCase(), this.devless_instance_url + sub_url);
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("devless-token", this.devless_token);
-		if (sessionStorage.getItem('devless_user_token' + this.devless_instance_url + this.devless_token != "")) {
+		if (sessionStorage.getItem('devless_user_token' + this.devless_instance_url + this.devless_token) != "") {
 
 			xhr.setRequestHeader("devless-user-token", sessionStorage.getItem('devless_user_token' + this.devless_instance_url + this.devless_token));
 		}
@@ -258,5 +259,5 @@
 		xhr.send(data);
 
 	}
-	global.Devless = global.DV = Devless;
-})(window);
+	global.Devless = global.DV = Devless; //exposes devless to the world;
+})(window /*injects the window object into the library.*/);
