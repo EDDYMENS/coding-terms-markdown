@@ -46,7 +46,9 @@
 		return DevlessInstance;
 	}
 
-	Devless.prototype = {queryData:queryData};
+	Devless.prototype = {queryData:queryData,
+                         addData:addData
+	 };
 
 	Devless.init = function (constants) {
 		var Self = this; //using this can be ambigiouse in certain context. so  i aliased to point to this very constructor.
@@ -88,6 +90,31 @@
 			callback(response);
 		})		
 		return this;	
+	}
+
+	   function addData(serviceName, table, data, callback){
+
+		var payload = JSON.stringify({
+			"resource": [
+			{  
+				"name": table,
+				"field":[  
+
+				data
+				]
+			}
+
+			]
+		});
+
+		sub_url = "/api/v1/service/"+serviceName+"/db";
+		requestProcessor.call(this,payload, sub_url,  "POST", function(response){
+
+			callback(response);
+
+		});
+		return this;
+
 	}
 
 
