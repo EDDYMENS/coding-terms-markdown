@@ -9,8 +9,19 @@ There are a couple of ways to introduce the  sdk into your application
 
 Once you have the SDK in your application you may now heard over to your Devless instance , then the App Tab , from there you can click on connect to my App and copy the connection details under the web tab . It should look something like below
 ```
-var constants = { "token":"955c8a0dc37b4a22b5950a9e0e9491d0", "key":"TEMPORAL-KEY", "domain":"http://localhost:9000" }
-Devless.init(constants)
+{ "token":"955c8a0dc37b4a22b5950a9e0e9491d0", "key":"TEMPORAL-KEY", "domain":"http://localhost:9000" }
+
+```
+
+**To create an instance of Devless**
+```
+var constants = { "token":"955c8a0dc37b4a22b5950a9e0e9491d0", "key":"TEMPORAL-KEY", "domain":"http://localhost:9000" };
+var Devless = Devless(constants);  
+```
+**or** 
+```
+var Devless  = DV(constants); //where DV is an alias for Devless
+
 ```
  You can follow up on connection status from the console tab of your browser developer tool.
 
@@ -83,9 +94,10 @@ eg:
 Devless.deleteData("serviceName", "table", "id", 1, function(response){console.log(response)})
 ```
 **token:**
-You will need to set an access token incase you need to login a user 
-You can set user access token with ``Devless.token(token, callback)``
-You can have access to the current token with ``Devless.token(callback)``
+You will need to set an access token incase you need to login a user .
+You can set user access token with ``Devless.setToken(token)`` .
+You can have access to the current token with ``Devless.getToken()`` or you can pass an optional callback function to process the token.
+``Devless.getToken(callback)``
 
 **response structure**
 * All response from the Devless backend have status_code where 700 means internal failure
