@@ -94,8 +94,12 @@ eg:
 Devless.deleteData("serviceName", "table", "id", 1, function(response){console.log(response)})
 ```
 **Remote Precedure Call (rpc)**
-```
+``
 Devless.call(serviceName, remoteProcedure, argsArray,callback);
+``
+eg:
+```
+Devless.call('AvengerService', 'assembleMethod', ["Hulk","Tor","Tony"],function(response){console.log(response)});
 ```
 
 **token:**
