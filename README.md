@@ -102,6 +102,42 @@ eg:
 Devless.call('AvengerService', 'assembleMethod', ["Hulk","Tor","Tony"],function(response){console.log(response)});
 ```
 
+**Authentication**
+Devless comes with authentication baked in.
+You can access the authentication methods using the DevLess SDK
+
+**Signing a user up**
+```
+Devless.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233540420521', 'firstname', 'lastname', 'anything else'], function(response){console.log(response});
+
+```
+**Login a user in**
+```
+Devless.call('devless', 'login', ['username', 'example@mail.com', '+2330420521', 'password'], function(response){console.log(response)});
+
+```
+###NB: You can use either username, email or phone_number in the authentication process. Just set the other params as empty strings except the password which is required.
+
+**Get user profile**
+
+```
+Devless.call('devless', 'profile', [], function(response){console.log(response)})
+
+```
+
+**Update user profile**
+```
+Devless.call('devless', 'updateProfile', ['example@mail.com', 'password', 'username', '+2330540420521', 'firstname', 'lastname', 'anything else'], function(response){console.log(response}));
+
+```
+##NB: If you wish not to update any field within the profile just leave as empty string without spacing in between. 
+
+**Logging user out**
+```
+Devless.call('devless', 'logout', [], function(response){console.log(response)})
+
+```
+
 **token:**
 You will need to set an access token incase you need to login a user .
 You can set user access token with ``Devless.setToken(token)`` .
