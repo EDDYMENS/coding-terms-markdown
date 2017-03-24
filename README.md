@@ -108,7 +108,7 @@ You can access the authentication methods using the DevLess SDK
 
 **Signing a user up**
 ```
-Devless.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233540420521', 'firstname', 'lastname', 'anything else'], ,function(resp){SDK.setToken(resp.payload.result));
+SDK.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233540420521', 'firstname', 'lastname', 'anything else'],function(resp){SDK.setToken(resp.payload.result);console.log(resp.payload.result)});
 ```
 **Login a user in**
 ```
