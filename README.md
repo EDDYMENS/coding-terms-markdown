@@ -13,17 +13,11 @@ Once you have the SDK in your application you may now head over to your DevLess 
 
 ```
 
-**To create an instance of Devless**
-```
-var constants = { "token":"955c8a0dc37b4a22b5950a9e0e9491d0", "key":"TEMPORAL-KEY", "domain":"http://localhost:9000" };
-var Devless = Devless(constants);  
-```
-**or** 
-```
-var Devless  = DV(constants); //where DV is an alias for Devless
 
-```
- You can follow up on connection status from the console tab of your browser developer tool.
+##Getting Started 
+Head over to the Dashboard/APP tab depending on the version of DevLess you are using and click on `connect to my app` copy the script url and add to your page. Voila you have DevLess.
+
+You can follow up on connection status from the console tab of your browser developer tool.
 
 **queryData:**
 
@@ -37,11 +31,11 @@ params={
     where:["id,1","name,edmond"]
 }
 
-Devless.queryData("serviceName", "tableName", params, function(response){
+SDK.queryData("serviceName", "tableName", params, function(response){
   console.log(response)
 });
 
- Eg: Devless.queryData("serviceName", "table", params, function(response){
+ Eg: SDK.queryData("serviceName", "table", params, function(response){
       console.log(response)
  });
 ```
@@ -55,7 +49,8 @@ Devless.queryData("serviceName", "tableName", params, function(response){
 
 You may add data to a service table using 
 ```
-Devless.addData("serviceName", "tableName", data,  function(response){
+data = {"name":"edmond", "age":12};
+SDK.addData("serviceName", "tableName", data,  function(response){
     console.log(response)
 })
  ```
@@ -67,11 +62,11 @@ data = {
   "title":"the fox",
   "content": "all about the fox"
 }
-Devless.addData("serviceName", "tableName", data, function(response){console.log(response)})
+SDK.addData("serviceName", "tableName", data, function(response){console.log(response)})
 ```
 **updateData:**
 
-You may update data in a service table using ``Devless.updateData("serviceName", "tableName", "identifier_type", "identifier", data, callback)``
+You may update data in a service table using ``SDK.updateData("serviceName", "tableName", "identifier_type", "identifier", data, callback)``
 where data is a JSON object.
 eg:
 
@@ -80,39 +75,39 @@ data = {
   "title":"the bear",
   "content": "all about the bear"
 }
-Devless.updateData("serviceName", "tableName", "id", "1", data, callback)
+SDK.updateData("serviceName", "tableName", "id", "1", data, callback)
 ```
 The functions parameters are pretty obvious the identifier_type refers to the field used to select the field to update and the next param is the id value 
 
 **delete:**
 
-You may delete data  using ``Devless.deleteData(serviceName, table, where_key, where_value, callback)``
+You may delete data  using ``SDK.deleteData(serviceName, table, where_key, where_value, callback)``
 
 eg:
 
 ```
-Devless.deleteData("serviceName", "table", "id", 1, function(response){console.log(response)})
+SDK.deleteData("serviceName", "table", "id", 1, function(response){console.log(response)})
 ```
 **Remote Precedure Call (rpc)**
 ``
-Devless.call(serviceName, remoteProcedure, argsArray,callback);
+SDK.call(serviceName, remoteProcedure, argsArray,callback);
 ``
 eg:
 ```
-Devless.call('AvengerService', 'assembleMethod', ["Hulk","Tor","Tony"],function(response){console.log(response)});
+SDK.call('AvengerService', 'assembleMethod', ["Hulk","Tor","Tony"],function(response){console.log(response)});
 ```
 
 **Authentication**
 Devless comes with authentication baked in.
 You can access the authentication methods using the DevLess SDK
 
-**Signing a user up**
+**Sign Up a new user **
 ```
 SDK.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233540420521', 'firstname', 'lastname', 'anything else'],function(resp){SDK.setToken(resp.payload.result);console.log(resp.payload.result)});
 ```
-**Login a user in**
+**Sign in a new user**
 ```
-Devless.call('devless', 'login', ['username', 'example@mail.com', '+2330420521', 'password'], function(response){Devless.setToken(response.payload.result}));
+SDK.call('devless', 'login', ['username', 'example@mail.com', '+2330420521', 'password'], function(response){SDK.setToken(response.payload.result)});
 
 ```
 ###NB: You can use either username, email or phone_number in the authentication process. Just set the other params as empty strings except the password which is required.
@@ -120,13 +115,13 @@ Devless.call('devless', 'login', ['username', 'example@mail.com', '+2330420521',
 **Get user profile**
 
 ```
-Devless.call('devless', 'profile', [], function(response){console.log(response)})
+SDK.call('devless', 'profile', [], function(response){console.log(response)})
 
 ```
 
 **Update user profile**
 ```
-Devless.call('devless', 'updateProfile', ['example@mail.com', 'password', 'username', '+2330540420521', 'firstname', 'lastname', 'anything else'], function(response){console.log(response}));
+SDK.call('devless', 'updateProfile', ['example@mail.com', 'password', 'username', '+2330540420521', 'firstname', 'mindname', 'anything else'], function(response){console.log(response)});
 
 ```
 ##NB: If you wish not to update any field within the profile just leave as empty string without spacing in between. 
