@@ -28,6 +28,8 @@ params={
     size:2,
     offset:2,
     orderBy:"name",
+    search:"field with name edmond",
+    orWhere: "age,2",
     where:["id,1","name,edmond"]
 }
 
