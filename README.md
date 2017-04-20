@@ -103,11 +103,11 @@ SDK.call('AvengerService', 'assembleMethod', ["Hulk","Tor","Tony"],function(resp
 Devless comes with authentication baked in.
 You can access the authentication methods using the DevLess SDK
 
-**Sign Up a new user **
+**Sign Up a user**
 ```
 SDK.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233540420521', 'firstname', 'lastname', 'anything else'],function(resp){SDK.setToken(resp.payload.result);console.log(resp.payload.result)});
 ```
-**Sign in a new user**
+**Sign in a user**
 ```
 SDK.call('devless', 'login', ['username', 'example@mail.com', '+2330420521', 'password'], function(response){SDK.setToken(response.payload.result)});
 
