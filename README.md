@@ -112,7 +112,7 @@ SDK.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233
 SDK.call('devless', 'login', ['username', 'example@mail.com', '+2330420521', 'password'], function(response){SDK.setToken(response.payload.result)});
 
 ```
-###NB: You can use either username, email or phone_number in the authentication process. Just set the other params as empty strings except the password which is required.
+### NB: You can use either username, email or phone_number in the authentication process. Just set the other params as empty strings except the password which is required.
 
 **Get user profile**
 
