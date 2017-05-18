@@ -47,6 +47,8 @@ SDK.queryData("serviceName", "tableName", params, function(response){
 ``orderBy`` param to order the results in descending order based  on a particular field eg ``params= {order:"content"}``.
 * The ``where`` parameter gets data where the key id is equal to 2 ``params= {where:["id,2"]}``.
 
+**N.B.** Pay attention to whitespaces. If the params doesn't contain whitespaces and you provide one, query will return no results.
+
 **addData:**
 
 You may add data to a service table using 
