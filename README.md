@@ -14,7 +14,7 @@ Once you have the SDK in your application you may now head over to your DevLess 
 ```
 
 
-##Getting Started 
+## Getting Started 
 Head over to the Dashboard/APP tab depending on the version of DevLess you are using and click on `connect to my app` copy the script url and add to your page. Voila you have DevLess.
 
 You can follow up on connection status from the console tab of your browser developer tool.
@@ -128,7 +128,7 @@ SDK.call('devless', 'profile', [], function(response){console.log(response)})
 SDK.call('devless', 'updateProfile', ['example@mail.com', 'password', 'username', '+2330540420521', 'firstname', 'mindname', 'anything else'], function(response){console.log(response)});
 
 ```
-##NB: If you wish not to update any field within the profile just leave as empty string without spacing in between. 
+## NB: If you wish not to update any field within the profile just leave as empty string without spacing in between. 
 
 **Logging user out**
 ```
