@@ -128,7 +128,7 @@ SDK.call('devless', 'profile', [], function(response){console.log(response)})
 SDK.call('devless', 'updateProfile', ['example@mail.com', 'password', 'username', '+2330540420521', 'firstname', 'mindname', 'anything else'], function(response){console.log(response)});
 
 ```
-## NB: If you wish not to update any field within the profile just leave as empty string without spacing in between. 
+### NB: If you wish not to update any field within the profile just leave as empty string without spacing in between. 
 
 **Logging user out**
 ```
