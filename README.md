@@ -29,7 +29,12 @@ params={
     offset:2,
     orderBy:"name",
     search:"field with name edmond",
-    orWhere: "age,2",
+    orWhere: ["age,2"],
+    lessThan: ["age,1"],
+    between: ["age,1,5"],
+    greaterThan: ["age,20"],
+    lessThanEqual: ["age,30"],
+    greaterThanEqual: ["age,1"],
     where:["id,1","name,edmond"]
 }
 
