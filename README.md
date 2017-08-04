@@ -103,11 +103,11 @@ You can access the authentication methods using the DevLess SDK
 
 **Sign Up a user**
 ```
-SDK.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233540420521', 'firstname', 'lastname', 'anything else'],function(resp){SDK.setToken(resp.payload.result);console.log(resp.payload.result)});
+SDK.call('devless', 'signUp', ['example@mail.com', 'password', 'username', '+233540420521', 'firstname', 'lastname', 'anything else'],function(resp){SDK.setToken(resp.payload.result.token);console.log(resp.payload.result)});
 ```
 **Sign in a user**
 ```
-SDK.call('devless', 'login', ['username', 'example@mail.com', '+2330420521', 'password'], function(response){SDK.setToken(response.payload.result)});
+SDK.call('devless', 'login', ['username', 'example@mail.com', '+2330420521', 'password'], function(response){SDK.setToken(response.payload.result.token)});
 
 ```
 ### NB: You can use either username, email or phone_number in the authentication process. Just set the other params as empty strings except the password which is required.
