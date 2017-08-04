@@ -2,19 +2,12 @@
 The Devless JS SDK provides a host of functions for working with data from the Devless backend.
 
 ##### Getting Started
-To introduce the SDK into your framework use the connect to app button within the DevLss framework 
+To introduce the SDK into your framework use the ```connect to app``` button within the DevLess framework 
 ![connect to app](https://github.com/EDDYMENS/service-images/blob/master/connect-to-app.png)
-
-Once you have the SDK in your application you may now head over to your DevLess instance, under the App Tab, click on connect to my App and copy the connection details under the web tab . It should look something like below
-```
-{ "token":"955c8a0dc37b4a22b5950a9e0e9491d0", "key":"TEMPORAL-KEY", "domain":"http://localhost:9000" }
-
-```
 
 
 ## Getting Started 
-Head over to the Dashboard/APP tab depending on the version of DevLess you are using and click on `connect to my app` copy the script url and add to your page. Voila you have DevLess.
-
+Paste the copied connection details from ```connect to app``` into your HTML or web page. You may check if connection has been established from the web console of your favourite browser.
 You can follow up on connection status from the console tab of your browser developer tool.
 
 **queryData:**
