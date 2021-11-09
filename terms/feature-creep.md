@@ -14,4 +14,4 @@ Feature creep may also happen when the business and or development team do not p
 
 Feature creep occurs either due to poor planning, misaligned priorities, or inadequate product strategy. When "out of scope" new features are requested or the updates are not reviewed properly before being released, it can result in feature creep.
 
-The best approach when launching a new app or a product is to offer only key features for what that app or product is designed for ie: an MVP. Afterward, based on the user reviews and feedback, new features may be added.
+The best approach when launching a new app or a product is to offer only key features for what that app or product is designed for ie: an [MVP](minimum-viable-product-mvp.md). Afterward, based on the user reviews and feedback, new features may be added.

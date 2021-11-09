@@ -11,7 +11,7 @@ This makes DSLs a good solution for software products where the user needs to ma
 Examples of DSL include: 
 
 - Spreadsheet formulas.
-- SQL which is primarily used to work with databases.
+- SQL which is primarily used to work with [databases](database.md).
 - The Linux SED command is also a DSL used for text file manipulation.
 
 ## Summary

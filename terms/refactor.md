@@ -1,6 +1,6 @@
 ## Definition
 
-The art of reorganizing your codebase  without altering its original functionality is known as refactoring. 
+The art of reorganizing your [codebase](code.md)  without altering its original functionality is known as refactoring. 
 
 The objective of refactoring is to enhance internal code by making changes that do not affect the code's outward behavior. The primary purpose of refactoring is to reduce [technical debt](technical-debt.md) and make code easier to maintain in the future. 
 

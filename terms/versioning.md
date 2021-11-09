@@ -6,7 +6,7 @@ No new features or code will be added to this version of the software. The same 
 
 ## Use Cases and Examples
 
-Versioning acts just like timestamps in movies. It allows you to go back and forth between different stages of your software.
+Versioning acts just like [timestamps](timestamp.md) in movies. It allows you to go back and forth between different stages of your software.
 
 [Version control](version-control.md) tools make it easy to move between versions of your software without necessarily creating duplicate copies. 
 

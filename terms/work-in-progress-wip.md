@@ -7,4 +7,4 @@ You will find the term used as a label usually in its short-form **WIP** in plac
 
 One of such popular places is in [GIT](https://git-scm.com) messages. The message lets others know the code or document is still being worked on and might not work or should not be touched.
 
-WIP is also used in comments within a codebase.
+WIP is also used in comments within a [codebase](code.md).
