@@ -1,0 +1,1 @@
+## <center> Refer to [locale](locale.md) </center>
