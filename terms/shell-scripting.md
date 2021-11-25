@@ -19,7 +19,7 @@ Hello, would it be okay if I were to ask you your name?
 John
 Hello, John
 ```
-Another popular use of shell scripting in the past was for the deployment of software onto [servers](server.md), these days this has been overtaken by a lot more complex tools.
+Another popular use of shell scripting in the past was for the [deployment](deployment.md) of software onto [servers](server.md), these days this has been overtaken by a lot more complex tools.
 
 ## Summary
 

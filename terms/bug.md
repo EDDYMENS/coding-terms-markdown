@@ -6,7 +6,7 @@ In most cases, bugs are caused by human error. Multiple factors can trigger a bu
 
 ## Use Cases and Examples
 
-Bugs usually result in annoying program glitches, but sometimes they can even crash the whole program. If a product is released and bugs are encountered after, the vendor then has to offer users with patch to update the program and fix the buggy code. In other to fix these bugs developers usually go through a process known as [debugging](debugging.md) which is employing different strategies to replicate the conditions causing the bug and find a fix for it.
+Bugs usually result in annoying program glitches, but sometimes they can even crash the whole program. If a product is released and bugs are encountered after, the vendor then has to offer users with [patch](software-patch.md) to update the program and fix the buggy code. In other to fix these bugs developers usually go through a process known as [debugging](debugging.md) which is employing different strategies to replicate the conditions causing the bug and find a fix for it.
 
 Let's assume you are running a program that works fine. Now you have to close it, so you click the "cancel" button. But the program performs no action to your input. You retry multiple times but it still does not close the program. This implies the program has a bug resulting in this behavior.
 
