@@ -24,7 +24,7 @@ function adder() {
 
 adder(); //The sum is: 500500
 ```
-In the example code above we have the line `for(var i = 1; i <= 1000; i++) {` which is the key part of our loop. It defines the start of the counting number as `1` using `var i = 1` and at the far end of it we have `i++`,  which will keep increasing `i` by 1 and stop when `i` is greater than `1000` as represented by `i <= 1000`. The second important piece of all this is the line `sum += i`. `sum` is acting as a store or bucket of sorts (called a variable in programming) and its job is to add and store the numbers as the loop generates them.
+In the example code above we have the line `for(var i = 1; i <= 1000; i++) {` which is the key part of our loop. It defines the start of the counting number as `1` using `var i = 1` and at the far end of it we have `i++`,  which will keep increasing `i` by 1 and stop when `i` is greater than `1000` as represented by `i <= 1000`. The second important piece of all this is the line `sum += i`. `sum` is acting as a store or bucket of sorts (called a [variable](variable.md) in programming) and its job is to add and store the numbers as the loop generates them.
 
 Then in the end we print out the total number `sum` stored, this will be the total sum of  `1` to `1000` thus `500500`.
 

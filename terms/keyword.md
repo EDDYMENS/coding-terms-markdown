@@ -1,6 +1,6 @@
 # Definition
 
-Keywords are words that have a predefined  meaning in a programming language. Keywords are reserved words that developers or programmers cannot use as the name of something for example variables, constants, and [functions](function.md) in most [programming languages](programming-language.md).
+Keywords are words that have a predefined  meaning in a programming language. Keywords are reserved words that developers or programmers cannot use as the name of something for example [variables](variable.md), constants, and [functions](function.md) in most [programming languages](programming-language.md).
 
 Basically, any part of the [syntax](syntax.md) where the developer has the option to use any name they choose must not clash with the reserved words of that language. They convey a specific instruction and so using it as a name of something in your code might lead to confusion during compile time.
 

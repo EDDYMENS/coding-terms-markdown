@@ -23,7 +23,7 @@ lastName  = 'Doe';
 fullName = firstName+' '+lastName;
 console.log(fullName); //John Doe
 ``` 
-From the above JavaScript [code](code.md), `fullName` acts as a variable storing the combination of `firstName` combined with a space using the `+` symbol then the `lastName`. 
+From the above JavaScript [code](code.md), `fullName` acts as a [variable](variable.md) storing the combination of `firstName` combined with a space using the `+` symbol then the `lastName`. 
 
 Most programming languages use the `+` symbol for concatenation as well. But for example, PHP uses `.` for this.
 
