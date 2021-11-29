@@ -23,7 +23,7 @@ In the example above, we defined our macro, and when it's time to use it, we don
 The above example looks very similar to functions. Macros in C go beyond this example though.
 
 ## Summary
-Macros are less used in modern programming languages. There is another concept similar to the use of macros known as preprocessors.
+Macros are less used in modern programming languages. There is another concept similar to the use of macros known as [preprocessors](preprocessor.md).
 
 This is a setup where the code the developer writes is first passed through a compiler-like setup, and the output is then passed through the actual compiler or interpreter of the programming language in use.
 
