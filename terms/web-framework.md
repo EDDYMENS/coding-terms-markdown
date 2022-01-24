@@ -5,7 +5,7 @@ A Web framework refers to a set of tools and resources used by software or web d
 A web framework is a pre-built structure that addresses the most repetitive activities and processes involved during website or web application development. 
 Very good frameworks usually come with good coding practices baked in, which influences how the developer writes the rest of their code leading to overall code quality. Speaking of modern architecture, most web frameworks these days are based on the [MVC](model-view-controller-mvc.md) architecture.
 
-Some key features linked with web frameworks are URL mapping, [web caching](cache.md), a cleaner and easier way to deal with working with databases using Object Relational Models (ORM) or ORMs, [configuration](configuration.md), [authentication](authentication.md), authorization, etc.
+Some key features linked with web frameworks are URL mapping, [web caching](cache.md), a cleaner and easier way to deal with working with databases using Object Relational Models (ORM) or ORMs, [configuration](configuration.md), [authentication](authentication.md), [authorization](authorization.md), etc.
 
 ## Use Cases and Examples
 
