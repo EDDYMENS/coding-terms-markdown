@@ -2,7 +2,7 @@
 
 Most mobile apps on your phone need to communicate to a [server](server.md) to perform most of their functionalities.  
 
-Some of these functionalities require that the user is verified. Unlike traditional web apps, where once a user is verified, the browser creates a [cookie](cookie.md) to hold this state, mobile apps have no such mechanism and rely on a different approach. Something stateless
+Some of these functionalities require that the user is verified. Unlike traditional web apps, where once a user is verified, the browser creates a [cookie](cookie.md) to hold this state, mobile apps have no such mechanism and rely on a different approach. Something [stateless](stateless.md)
 
 This is also true for modern web apps built using modern frontend [frameworks](web-framework.md) with [APIs](api.md) acting as an exchange medium to the server. 
 
