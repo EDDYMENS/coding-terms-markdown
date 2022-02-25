@@ -1,5 +1,5 @@
 ## Definition
-Object Relational Models (ORMs) is a library which is code that helps developers to represent and work with data from [databases](database.md) in the form of objects without context switching between their [programming language](programming-language.md) and say SQL.
+Object Relational Models (ORMs) is a [library](library.md) which is code that helps developers to represent and work with data from [databases](database.md) in the form of objects without context switching between their [programming language](programming-language.md) and say SQL.
 
 ## Use cases and Examples
 As an example, if a developer working in PHP wanted to retrieve some data from the database without using an ORM, the code would look like this:
