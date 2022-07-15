@@ -34,4 +34,4 @@ Now there are different data types that JSON can store and these are:
 To be clear JSON is a key-value pair kind of exchange format, meaning on the left you have a label known as the key and to the right is the value, different data types can be used for the value but the key always has to be a string. You can get around using a number as a string though by just wrapping double quotes around it ie: `{"1":"Usain Bolt"}`. Also, single quotes can not be used in JSON to wrap around strings, only double quotes.
 ## Summary
 
-In short, JSON provides an easy-to-use format to store data in a key-value pair format. In the past, a more verbose data exchange medium was used known as XML but JSON replaced it given it's a lot less verbose which means less unrelated data needs to be transferred over a network for example.
+In short, JSON provides an easy-to-use format to store data in a [key-value pair](key-value-pair.md) format. In the past, a more verbose data exchange medium was used known as XML but JSON replaced it given it's a lot less verbose which means less unrelated data needs to be transferred over a network for example.

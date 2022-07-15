@@ -1,5 +1,5 @@
 ## Definition
-Session storage is a web storage type that can store data (key-value pairs) in the browser. It will hold the data until the tab or browser is closed. Once the browser or tab is closed, the stored data is removed.
+Session storage is a web storage type that can store data ([key-value pairs](key-value-pair.md)) in the browser. It will hold the data until the tab or browser is closed. Once the browser or tab is closed, the stored data is removed.
 
 
 ## Use Cases and Examples

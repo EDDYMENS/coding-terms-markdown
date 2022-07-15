@@ -1,6 +1,6 @@
 ## Definition
 
-Local storage is a web storage type that enables JavaScript sites and apps to store data (key-value pairs) in the browser with no expiration date. So, unlike [session storage](session-storage.md), local storage holds the data even when the tab or browser is closed.
+Local storage is a web storage type that enables JavaScript sites and apps to store data ([key-value pairs](key-value-pair.md)) in the browser with no expiration date. So, unlike [session storage](session-storage.md), local storage holds the data even when the tab or browser is closed.
 
 Compared to cookies, local storage offers a higher storage limit (around 5 MB or more), the syntax is straightforward, and it does not send data to the server during an HTTP request.
 
